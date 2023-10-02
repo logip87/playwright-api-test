@@ -67,4 +67,4 @@ To run all the tests, execute the following command:
 
 ## Code Formatting
 
-This project uses [Prettier](https://prettier.io/) for code formatting. Before committing your code, ensure to format your changes:
+This project uses [Prettier](https://prettier.io/) for code formatting.
