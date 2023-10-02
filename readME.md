@@ -20,13 +20,13 @@ Ensure you have [Node.js](https://nodejs.org/) installed.
 1. Clone the repository:
 
     ```
-    git clone <repository-url>
+    git clone https://github.com/logip87/playwright-api-test.git
     ```
 
 2. Navigate to the project directory:
 
     ```
-     cd <project-directory>
+     cd playwright-api-trucks
     ```
 
 3. Install the dependencies:
