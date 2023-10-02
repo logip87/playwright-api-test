@@ -13,6 +13,49 @@ This repository contains End-to-End tests for the Truck Management API available
     -   The remaining statuses can only be changed in the following order: `Loading -> To Job -> At Job -> Returning`. When the Truck has the "Returning" status, it can start "Loading" again.
     -   May have a description.
 
+## GitHub Actions
+
+This project is integrated with GitHub Actions for Continuous Integration (CI). The workflow is triggered in the following scenarios:
+
+- Pushing commits to the main branch.
+- Opening, reopening, or editing a pull request.
+- Manual trigger.
+
+After the tests are executed, the workflow uploads a test report as an artifact. This allows for easy access and review of the test results.
+
+![Test Report Screenshot](test-report.png) 
+
+## Manual Triggering of GitHub Actions
+
+If you want to manually trigger the GitHub Actions workflow without making a commit or opening a pull request, you can do so using the following steps:
+
+1. **Navigate to the GitHub Repository**:
+   Go to the main page of your GitHub repository.
+
+2. **Go to the "Actions" Tab**:
+   Located at the top of the repository, click on the "Actions" tab.
+
+3. **Select the Workflow**:
+   On the left sidebar, select the workflow you want to run.
+
+4. **Run Workflow**:
+   Above the list of past runs, you'll find a "Run workflow" dropdown. Click on it.
+
+5. **Select the Branch**:
+   Using the dropdown, select the branch where you want to run the workflow.
+
+6. **Trigger the Workflow**:
+   Click on the "Run workflow" button to start the workflow.
+
+7. **Monitor the Workflow**:
+   You can click on the workflow run to monitor the progress, view logs, and see results.
+
+8. **Accessing the Test Report**:
+   After the workflow completes, in the specific run summary, under the "Artifacts" section, you can download the test report.
+
+Remember, manually triggering the GitHub Actions workflow will use the latest commit on the branch you select. Ensure you have pushed all your changes to the desired branch before manually triggering the workflow.
+
+
 ## Installation
 
 Ensure you have [Node.js](https://nodejs.org/) installed.
