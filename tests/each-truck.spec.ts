@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { randomCode, randomID, randomName } from '../functions/random';
 
+interface Truck {
+    id: number;
+    code: string;
+}
+
 test('Basic test to check if all of the trucks have unique code', async ({
     request,
 }) => {
@@ -13,22 +18,34 @@ test('Basic test to check if all of the trucks have unique code', async ({
     expect(truckCodes.length).toBe(uniqueCodes.length);
 });
 
-test('Test to check if all of the trucks have unique code, with id specification', async ({
-    request,
-}) => {
-    const req = await request.get(`/trucks`);
-    expect(req.ok()).toBeTruthy();
-    const trucks = await req.json();
-    console.log(trucks);
+test('Test to check if all of the trucks have unique code, with id specification', async ({ request }) => {
+    let page = 1;
+    let allTrucks: Truck[] = [];
+    let morePages = true;
+
+    while (morePages) {
+        const req = await request.get(`/trucks?page=${page}`);
+        expect(req.ok()).toBeTruthy();
+        const trucks: Truck[] = await req.json();
+
+        if (trucks.length === 0) {
+            morePages = false;
+        } else {
+            allTrucks = allTrucks.concat(trucks);
+            page += 1;
+        }
+    }
+
+    console.log(allTrucks);
 
     const codeToIdsMap: { [code: string]: number } = {};
     const errors: string[] = [];
 
-    for (let truck of trucks) {
+    for (let truck of allTrucks) {
         await test.step(`Check truck with id : ${truck.id}`, async () => {
             if (codeToIdsMap[truck.code]) {
                 errors.push(
-                    `Truck with ID ${truck.id} has a duplicate code: ${truck.code}`
+                    `Truck with ID ${truck.id} has a duplicate code: ${truck.code} previously seen with ID ${codeToIdsMap[truck.code]}`
                 );
             } else {
                 codeToIdsMap[truck.code] = truck.id;
@@ -41,6 +58,7 @@ test('Test to check if all of the trucks have unique code, with id specification
         throw new Error('Some trucks have duplicate codes.');
     }
 });
+
 test('Test to check if all of the trucks have a name', async ({ request }) => {
     const req = await request.get(`/trucks`);
     expect(req.ok()).toBeTruthy();
